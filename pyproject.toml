@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rascasse-bq-client"
+version = "0.1.0"
+description = "Shared BigQuery client used across Rascasse Python services (cloud-functions, socialops, entity-enrichment)"
+requires-python = ">=3.9"
+dependencies = [
+    "google-cloud-bigquery>=3.0",
+]
+
+[project.optional-dependencies]
+polars = ["polars", "pyarrow", "google-cloud-bigquery-storage"]
+
+[tool.setuptools.packages.find]
+include = ["rascasse_bq_client*"]
