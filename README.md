@@ -8,16 +8,25 @@ and `entity-enrichment`.
 
 ## Install
 
+Use the GitHub release-tarball URL, **not** `git+https://...`. Several
+consuming services build in minimal Docker images (`python:3.12-slim`) that
+don't have the `git` binary installed, which makes `pip install git+https://...`
+fail at build time ("Cannot find command 'git'") - a plain tarball URL has no
+such dependency, pip just downloads and unpacks it like any other sdist.
+
 ```bash
-pip install "git+https://github.com/rascasse-com/rascasse-bq-client.git"
-# with polars support:
-pip install "git+https://github.com/rascasse-com/rascasse-bq-client.git#egg=rascasse-bq-client[polars]"
+pip install "rascasse-bq-client @ https://github.com/rascasse-com/rascasse-bq-client/archive/refs/tags/v0.1.0.tar.gz"
 ```
 
-Pin to a commit/tag in `requirements.txt` once this stabilizes, e.g.:
+In `requirements.txt`:
 ```
-rascasse-bq-client @ git+https://github.com/rascasse-com/rascasse-bq-client.git@v0.1.0
+rascasse-bq-client @ https://github.com/rascasse-com/rascasse-bq-client/archive/refs/tags/v0.1.0.tar.gz
 ```
+
+For the `polars` extra, download the tarball as above then `pip install ".[polars]"` from
+a local checkout, or vendor the optional deps (`polars`, `pyarrow`, `google-cloud-bigquery-storage`)
+directly in the consumer's own requirements.txt - the extras syntax needs a package name,
+which isn't available from a bare tarball URL.
 
 ## Usage
 
